@@ -47,13 +47,13 @@ class UserControllerTest extends FinancialApiApplicationTests {
                 .contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         assertEquals(400, response.getStatus());
-        assertEquals("{\"message\":\"Validation request error\",\"body\":{\"name\":\"name must no be empty\"}}", response.getContentAsString());
+        assertEquals("{\"message\":\"Validation request error\",\"body\":{\"name\":\"must not be empty\"}}", response.getContentAsString());
 
         response = mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .content("{\"name\": null}")
                 .contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         assertEquals(400, response.getStatus());
-        assertEquals("{\"message\":\"Validation request error\",\"body\":{\"name\":\"name must no be empty\"}}", response.getContentAsString());
+        assertEquals("{\"message\":\"Validation request error\",\"body\":{\"name\":\"must not be empty\"}}", response.getContentAsString());
     }
 }
