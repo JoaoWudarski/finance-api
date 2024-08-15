@@ -8,6 +8,7 @@ class FinancialApiApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// EMPTY TEST JUST TO VALIDATED CONTEXT UP
 	}
 
 }
