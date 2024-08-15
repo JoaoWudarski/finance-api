@@ -28,7 +28,6 @@
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.organization>joaowudarski</sonar.organization>
 		<sonar.projectKey>JoaoWudarski_${artifactId}</sonar.projectKey>
-		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -103,7 +102,7 @@
 						</goals>
 						<configuration>
 							<formats>
-								<format>HTML</format>
+								<format>XML</format>
 							</formats>
 						</configuration>
 					</execution>
