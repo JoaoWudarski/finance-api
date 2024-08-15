@@ -1,4 +1,4 @@
-package com.jwapp.financial_api;
+package com.jwapp.financialapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +8,7 @@ class FinancialApiApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// EMPTY TEST JUST TO VALIDATED CONTEXT UP
 	}
 
 }
