@@ -9,17 +9,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jwapp</groupId>
-	<artifactId>finance-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>financial-api</artifactId>
+	<version>v0.1.1</version>
 	<name>financial-api</name>
 	<description>API to administrate financial accounts and payments</description>
 	<url/>
 	<licenses>
 		<license/>
 	</licenses>
-	<developers>
-		<developer/>
-	</developers>
 	<scm>
 		<connection/>
 		<developerConnection/>
