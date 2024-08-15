@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jwapp</groupId>
 	<artifactId>financial-api</artifactId>
-	<version>v0.1.1</version>
+	<version>v0.1.2</version>
 	<name>financial-api</name>
 	<description>API to administrate financial accounts and payments</description>
 	<url/>
