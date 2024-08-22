@@ -19,7 +19,11 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
-    private List<CurrentAccount> currentAccountList;
+    private List<Account> accountList;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
     private List<Card> cardList;
+
+    public User(Long id) {
+        this.id = id;
+    }
 }
