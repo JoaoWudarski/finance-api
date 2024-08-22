@@ -24,7 +24,7 @@ class UserControllerTest extends FinancialApiApplicationTests {
     @DisplayName("Dado um novo usuario " +
                  "Quando chamado o endpoint para gerar um novo " +
                  "Entao deve ser chamado o serviço e retornado 201 com o ID gerado")
-    void test1() throws Exception {
+    void saveCase1() throws Exception {
         when(createUser.createNew(Mockito.any())).thenReturn(10L);
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.post("/users")
@@ -41,7 +41,7 @@ class UserControllerTest extends FinancialApiApplicationTests {
     @DisplayName("Dado um novo usuario " +
                  "Quando chamado o endpoint para gerar um novo mas sem passar as informacoes necessarias " +
                  "Entao deve ser retornado um erro 400 indicando os campos faltantes")
-    void test2() throws Exception {
+    void saveCase2() throws Exception {
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .content("{\"name\": \"\"}")
                 .contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
