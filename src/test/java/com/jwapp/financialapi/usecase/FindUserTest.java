@@ -1,6 +1,5 @@
 package com.jwapp.financialapi.usecase;
 
-import com.jwapp.financialapi.domain.User;
 import com.jwapp.financialapi.repository.UserRepository;
 import com.jwapp.financialapi.usecase.impl.FindUserImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,13 +30,13 @@ class FindUserTest {
                  "Quando chamado o usecase para validar se existe um usuario " +
                  "Entao deve ser retornado true")
     void existsCase1() {
-        when(userRepository.findById(any())).thenReturn(Optional.of(new User()));
+        when(userRepository.existsById(any())).thenReturn(true);
 
         boolean userExists = findUser.exists(1L);
 
         assertTrue(userExists);
 
-        verify(userRepository).findById(1L);
+        verify(userRepository).existsById(1L);
     }
 
     @Test
@@ -47,12 +44,12 @@ class FindUserTest {
                  "Quando chamado o usecase para validar se existe um usuario " +
                  "Entao deve ser retornado false")
     void existsCase2() {
-        when(userRepository.findById(any())).thenReturn(Optional.empty());
+        when(userRepository.existsById(any())).thenReturn(false);
 
         boolean userExists = findUser.exists(1L);
 
         assertFalse(userExists);
 
-        verify(userRepository).findById(1L);
+        verify(userRepository).existsById(1L);
     }
 }

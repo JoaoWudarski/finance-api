@@ -44,7 +44,7 @@ class CreateAccountTest {
                  "Quando chamado o usecase para criar um novo account " +
                  "Entao deve ser salvo no banco de dados e retornado o novo ID")
     void createNewCase1() {
-        Account accountDb = new Account(10L, new BigDecimal("1000.0"), "Santander", null, null, null);
+        Account accountDb = new Account(10L, new BigDecimal("1000.0"), "Santander", null, null, null, null);
         when(accountRepository.save(Mockito.any(Account.class))).thenReturn(accountDb);
         when(accountRepository.findByUserAndBank(any(), any())).thenReturn(new ArrayList<>());
         when(findUser.exists(any())).thenReturn(true);
@@ -52,7 +52,7 @@ class CreateAccountTest {
         Long id = createAccount.createNew(new AccountRequest("Santander", 3L));
 
         assertEquals(10L, id);
-        verify(accountRepository).save(new Account(null, BigDecimal.ZERO, "Santander", new User(3L), null, null));
+        verify(accountRepository).save(new Account(null, BigDecimal.ZERO, "Santander", new User(3L), null, null, null));
         verify(accountRepository).findByUserAndBank(new User(3L), "Santander");
         verify(findUser).exists(3L);
     }
@@ -62,7 +62,7 @@ class CreateAccountTest {
                  "Quando chamado o usecase para criar um novo account e já existir uma conta com esse banco " +
                  "Entao deve ser lançado um ConflictException")
     void createNewCase2() {
-        when(accountRepository.findByUserAndBank(any(), any())).thenReturn(List.of(new Account(1L, null, "Santander", null, null, null)));
+        when(accountRepository.findByUserAndBank(any(), any())).thenReturn(List.of(new Account(1L, null, "Santander", null, null, null, null)));
         when(findUser.exists(any())).thenReturn(true);
 
         AccountRequest account = new AccountRequest("Santander", 3L);
@@ -78,7 +78,7 @@ class CreateAccountTest {
                  "Quando chamado o usecase para criar um novo account e o User nao existir " +
                  "Entao deve ser lançado um NotFound")
     void createNewCase3() {
-        when(accountRepository.findByUserAndBank(any(), any())).thenReturn(List.of(new Account(1L, null, "Santander", null, null, null)));
+        when(accountRepository.findByUserAndBank(any(), any())).thenReturn(List.of(new Account(1L, null, "Santander", null, null, null, null)));
         when(findUser.exists(any())).thenReturn(false);
 
         AccountRequest account = new AccountRequest("Santander", 3L);
