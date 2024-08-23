@@ -21,7 +21,7 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody AccountRequest accountRequest) {
-        Long id = createAccount.createNew(accountRequest);
+        Long id = createAccount.createNew(accountRequest.toDomain());
         return ResponseEntity.created(URI.create("/accounts/" + id)).build();
     }
 }

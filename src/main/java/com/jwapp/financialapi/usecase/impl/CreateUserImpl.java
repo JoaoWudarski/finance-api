@@ -14,8 +14,8 @@ public class CreateUserImpl implements CreateUser {
     private final UserRepository userRepository;
 
     @Override
-    public Long createNew(UserRequest userRequest) {
-        User userDb = userRepository.save(userRequest.toDomain());
+    public Long createNew(User user) {
+        User userDb = userRepository.save(user);
         return userDb.getId();
     }
 }

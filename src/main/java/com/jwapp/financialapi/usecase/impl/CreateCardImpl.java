@@ -1,6 +1,6 @@
 package com.jwapp.financialapi.usecase.impl;
 
-import com.jwapp.financialapi.controller.dto.request.CardRequest;
+import com.jwapp.financialapi.domain.Account;
 import com.jwapp.financialapi.domain.Card;
 import com.jwapp.financialapi.exception.NotFoundException;
 import com.jwapp.financialapi.repository.CardRepository;
@@ -17,11 +17,10 @@ public class CreateCardImpl implements CreateCard {
     private final FindAccount findAccount;
 
     @Override
-    public Long createNew(CardRequest cardRequest) {
-        Card card = cardRequest.toDomain();
-
-        if (!findAccount.exists(cardRequest.accountId()))
-            throw new NotFoundException("Nao existe uma conta com id " + cardRequest.accountId() + " criada");
+    public Long createNew(Card card) {
+        Account account = card.getAccount();
+        if (!findAccount.exists(account.getId()))
+            throw new NotFoundException("Nao existe uma conta com id " + account.getId() + " criada");
 
         return cardRepository.save(card).getId();
     }

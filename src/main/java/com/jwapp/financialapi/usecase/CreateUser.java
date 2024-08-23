@@ -1,8 +1,8 @@
 package com.jwapp.financialapi.usecase;
 
-import com.jwapp.financialapi.controller.dto.request.UserRequest;
+import com.jwapp.financialapi.domain.User;
 
 public interface CreateUser {
 
-    Long createNew(UserRequest userRequest);
+    Long createNew(User user);
 }

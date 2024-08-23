@@ -8,6 +8,8 @@ public record UserRequest(
 ) {
 
     public User toDomain() {
-        return new User(null, name, null);
+        return User.builder()
+                .name(name)
+                .build();
     }
 }

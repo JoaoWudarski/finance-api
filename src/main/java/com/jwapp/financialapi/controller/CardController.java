@@ -21,7 +21,7 @@ public class CardController {
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody CardRequest cardRequest) {
-        Long id = createCard.createNew(cardRequest);
+        Long id = createCard.createNew(cardRequest.toDomain());
         return ResponseEntity.created(URI.create("/cards/" + id)).build();
     }
 }

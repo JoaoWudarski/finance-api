@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody UserRequest userRequest) {
-        Long id = createUser.createNew(userRequest);
+        Long id = createUser.createNew(userRequest.toDomain());
         return ResponseEntity.created(URI.create("/users/" + id)).build();
     }
 }
