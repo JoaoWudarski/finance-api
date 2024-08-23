@@ -4,6 +4,7 @@ import com.jwapp.financialapi.domain.payment.CardPayment;
 import com.jwapp.financialapi.domain.receipt.ReversalCardReceipt;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Card {
@@ -19,7 +21,6 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String bank;
     private String flagCard;
     private Integer closeDay;
     private Integer paymentDay;
@@ -27,10 +28,14 @@ public class Card {
     private BigDecimal usedLimit;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
     @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
     private List<CardPayment> cardPaymentList;
     @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
     private List<ReversalCardReceipt> reversalCardReceiptList;
+
+    public Card(Long id) {
+        this.id = id;
+    }
 }
