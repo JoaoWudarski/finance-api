@@ -33,12 +33,12 @@ class CreateUserTest {
                  "Quando chamado o usecase para criar um novo usuario " +
                  "Entao deve ser salvo no banco de dados e retornado o novo ID")
     void createNewCase1() {
-        User userDb = new User(10L, "Joao", null, null);
+        User userDb = new User(10L, "Joao", null);
         when(userRepository.save(Mockito.any(User.class))).thenReturn(userDb);
 
         Long id = createUser.createNew(new UserRequest("Joao"));
 
         assertEquals(10L, id);
-        verify(userRepository).save(new User(null, "Joao", null, null));
+        verify(userRepository).save(new User(null, "Joao", null));
     }
 }

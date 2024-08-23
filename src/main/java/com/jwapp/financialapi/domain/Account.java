@@ -23,12 +23,18 @@ public class Account {
     private Long id;
     private BigDecimal balance;
     private String bank;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
+    private List<Card> cardList;
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
     private List<AccountPayment> accountPaymentList;
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
     private List<AccountReceipt> accountReceiptList;
 
+    public Account(Long id) {
+        this.id = id;
+    }
 }

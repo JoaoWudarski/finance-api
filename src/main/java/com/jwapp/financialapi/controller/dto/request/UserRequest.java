@@ -8,6 +8,6 @@ public record UserRequest(
 ) {
 
     public User toDomain() {
-        return new User(null, name, null, null);
+        return new User(null, name, null);
     }
 }

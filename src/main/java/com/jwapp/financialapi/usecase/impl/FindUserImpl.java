@@ -13,6 +13,6 @@ public class FindUserImpl implements FindUser {
 
     @Override
     public boolean exists(Long id) {
-        return userRepository.findById(id).isPresent();
+        return userRepository.existsById(id);
     }
 }
