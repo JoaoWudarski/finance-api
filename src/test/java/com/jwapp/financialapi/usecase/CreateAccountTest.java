@@ -1,6 +1,5 @@
 package com.jwapp.financialapi.usecase;
 
-import com.jwapp.financialapi.controller.dto.request.AccountRequest;
 import com.jwapp.financialapi.domain.Account;
 import com.jwapp.financialapi.domain.User;
 import com.jwapp.financialapi.exception.ConflictException;
@@ -49,7 +48,7 @@ class CreateAccountTest {
         when(accountRepository.findByUserAndBank(any(), any())).thenReturn(new ArrayList<>());
         when(findUser.exists(any())).thenReturn(true);
 
-        Long id = createAccount.createNew(new AccountRequest("Santander", 3L));
+        Long id = createAccount.createNew(Account.builder().bank("Santander").balance(BigDecimal.ZERO).user(new User(3L)).build());
 
         assertEquals(10L, id);
         verify(accountRepository).save(new Account(null, BigDecimal.ZERO, "Santander", new User(3L), null, null, null));
@@ -65,7 +64,7 @@ class CreateAccountTest {
         when(accountRepository.findByUserAndBank(any(), any())).thenReturn(List.of(new Account(1L, null, "Santander", null, null, null, null)));
         when(findUser.exists(any())).thenReturn(true);
 
-        AccountRequest account = new AccountRequest("Santander", 3L);
+        Account account = Account.builder().bank("Santander").user(new User(3L)).build();
         assertThrows(ConflictException.class, () -> createAccount.createNew(account));
 
         verify(accountRepository).findByUserAndBank(new User(3L), "Santander");
@@ -81,7 +80,7 @@ class CreateAccountTest {
         when(accountRepository.findByUserAndBank(any(), any())).thenReturn(List.of(new Account(1L, null, "Santander", null, null, null, null)));
         when(findUser.exists(any())).thenReturn(false);
 
-        AccountRequest account = new AccountRequest("Santander", 3L);
+        Account account = Account.builder().bank("Santander").user(new User(3L)).build();
         assertThrows(NotFoundException.class, () -> createAccount.createNew(account));
 
         verify(accountRepository, never()).findByUserAndBank(any(), any());

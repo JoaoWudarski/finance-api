@@ -1,7 +1,8 @@
 package com.jwapp.financialapi.controller;
 
 import com.jwapp.financialapi.FinancialApiApplicationTests;
-import com.jwapp.financialapi.controller.dto.request.AccountRequest;
+import com.jwapp.financialapi.domain.Account;
+import com.jwapp.financialapi.domain.User;
 import com.jwapp.financialapi.usecase.CreateAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +39,7 @@ class AccountControllerTest extends FinancialApiApplicationTests {
         assertEquals(201, response.getStatus());
         assertEquals("/accounts/10", response.getHeader("Location"));
 
-        verify(createAccount).createNew(new AccountRequest("Santander", 3L));
+        verify(createAccount).createNew(Account.builder().bank("Santander").balance(BigDecimal.ZERO).user(new User(3L)).build());
     }
 
     @ParameterizedTest

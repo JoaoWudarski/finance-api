@@ -1,6 +1,5 @@
 package com.jwapp.financialapi.usecase;
 
-import com.jwapp.financialapi.controller.dto.request.UserRequest;
 import com.jwapp.financialapi.domain.User;
 import com.jwapp.financialapi.repository.UserRepository;
 import com.jwapp.financialapi.usecase.impl.CreateUserImpl;
@@ -33,12 +32,13 @@ class CreateUserTest {
                  "Quando chamado o usecase para criar um novo usuario " +
                  "Entao deve ser salvo no banco de dados e retornado o novo ID")
     void createNewCase1() {
+        User newUser = new User(null, "Joao", null);
         User userDb = new User(10L, "Joao", null);
         when(userRepository.save(Mockito.any(User.class))).thenReturn(userDb);
 
-        Long id = createUser.createNew(new UserRequest("Joao"));
+        Long id = createUser.createNew(newUser);
 
         assertEquals(10L, id);
-        verify(userRepository).save(new User(null, "Joao", null));
+        verify(userRepository).save(newUser);
     }
 }
