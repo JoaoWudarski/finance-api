@@ -1,8 +1,8 @@
 package com.jwapp.financialapi.usecase;
 
-import com.jwapp.financialapi.controller.dto.request.CardRequest;
+import com.jwapp.financialapi.domain.Card;
 
 public interface CreateCard {
 
-    Long createNew(CardRequest cardRequest);
+    Long createNew(Card card);
 }

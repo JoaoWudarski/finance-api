@@ -1,6 +1,5 @@
 package com.jwapp.financialapi.usecase;
 
-import com.jwapp.financialapi.controller.dto.request.CardRequest;
 import com.jwapp.financialapi.domain.Account;
 import com.jwapp.financialapi.domain.Card;
 import com.jwapp.financialapi.exception.NotFoundException;
@@ -40,14 +39,15 @@ class CreateCardTest {
                  "Quando chamado o usecase para criar um novo card " +
                  "Entao deve ser salvo no banco de dados e retornado o novo ID")
     void createNewCase1() {
-        Card card = new Card(1L);
-        when(cardRepository.save(Mockito.any())).thenReturn(card);
+        Card newCard = Card.builder().flagCard("Visa").closeDay(10).paymentDay(20).totalLimit(new BigDecimal("3000.0")).account(new Account(3L)).build();
+        Card cardDb = new Card(1L);
+        when(cardRepository.save(Mockito.any())).thenReturn(cardDb);
         when(findAccount.exists(any())).thenReturn(true);
 
-        Long id = createCard.createNew(new CardRequest("Visa", 10, 20, new BigDecimal("3000.0"), 3L));
+        Long id = createCard.createNew(newCard);
 
         assertEquals(1L, id);
-        verify(cardRepository).save(new Card(null, "Visa", 10, 20, new BigDecimal("3000.0"), BigDecimal.ZERO, new Account(3L), null, null));
+        verify(cardRepository).save(newCard);
         verify(findAccount).exists(3L);
     }
 
@@ -58,8 +58,8 @@ class CreateCardTest {
     void createNewCase2() {
         when(findAccount.exists(any())).thenReturn(false);
 
-        CardRequest cardRequest = new CardRequest("Visa", 10, 20, new BigDecimal("3000.0"), 3L);
-        assertThrows(NotFoundException.class, () -> createCard.createNew(cardRequest));
+        Card newCard = Card.builder().flagCard("Visa").closeDay(10).paymentDay(20).totalLimit(new BigDecimal("3000.0")).account(new Account(3L)).build();
+        assertThrows(NotFoundException.class, () -> createCard.createNew(newCard));
 
         verify(cardRepository, never()).save(any());
         verify(findAccount).exists(3L);

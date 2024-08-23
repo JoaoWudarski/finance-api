@@ -1,7 +1,7 @@
 package com.jwapp.financialapi.controller;
 
 import com.jwapp.financialapi.FinancialApiApplicationTests;
-import com.jwapp.financialapi.controller.dto.request.UserRequest;
+import com.jwapp.financialapi.domain.User;
 import com.jwapp.financialapi.usecase.CreateUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class UserControllerTest extends FinancialApiApplicationTests {
         assertEquals(201, response.getStatus());
         assertEquals("/users/10", response.getHeader("Location"));
 
-        verify(createUser).createNew(new UserRequest("Joao"));
+        verify(createUser).createNew(User.builder().name("Joao").build());
     }
 
     @Test

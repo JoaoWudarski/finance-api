@@ -1,7 +1,8 @@
 package com.jwapp.financialapi.controller;
 
 import com.jwapp.financialapi.FinancialApiApplicationTests;
-import com.jwapp.financialapi.controller.dto.request.CardRequest;
+import com.jwapp.financialapi.domain.Account;
+import com.jwapp.financialapi.domain.Card;
 import com.jwapp.financialapi.usecase.CreateCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ class CardControllerTest extends FinancialApiApplicationTests {
         assertEquals(201, response.getStatus());
         assertEquals("/cards/10", response.getHeader("Location"));
 
-        verify(createCard).createNew(new CardRequest("Visa", 10, 20, new BigDecimal("2000.0"), 3L));
+        verify(createCard).createNew(Card.builder().flagCard("Visa").closeDay(10).paymentDay(20).usedLimit(BigDecimal.ZERO).totalLimit(new BigDecimal("2000.0")).account(new Account(3L)).build());
     }
 
     @ParameterizedTest
