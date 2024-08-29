@@ -1,26 +1,25 @@
 package com.jwapp.financialapi.usecase.impl;
 
 import com.jwapp.financialapi.domain.Account;
-import com.jwapp.financialapi.exception.NotFoundException;
 import com.jwapp.financialapi.repository.AccountRepository;
+import com.jwapp.financialapi.usecase.ChangeBalanceAccount;
 import com.jwapp.financialapi.usecase.FindAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 @RequiredArgsConstructor
-public class FindAccountImpl implements FindAccount {
+public class ChangeBalanceAccountImpl implements ChangeBalanceAccount {
 
     private final AccountRepository accountRepository;
+    private final FindAccount findAccount;
 
     @Override
-    public boolean exists(Long id) {
-        return accountRepository.existsById(id);
-    }
-
-    @Override
-    public Account byId(Long id) {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Nao existe conta com id " + id));
+    public void addValue(BigDecimal value, Long accountId) {
+        Account account = findAccount.byId(accountId);
+        account.addBalance(value);
+        accountRepository.save(account);
     }
 }

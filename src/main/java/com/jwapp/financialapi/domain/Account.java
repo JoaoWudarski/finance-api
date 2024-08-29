@@ -37,4 +37,8 @@ public class Account {
     public Account(Long id) {
         this.id = id;
     }
+
+    public void addBalance(BigDecimal addValue) {
+        this.balance = this.balance.add(addValue);
+    }
 }

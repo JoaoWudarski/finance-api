@@ -1,5 +1,7 @@
 package com.jwapp.financialapi.usecase;
 
+import com.jwapp.financialapi.domain.Account;
+import com.jwapp.financialapi.exception.NotFoundException;
 import com.jwapp.financialapi.repository.AccountRepository;
 import com.jwapp.financialapi.usecase.impl.FindAccountImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,5 +56,32 @@ class FindAccountTest {
         assertFalse(userExists);
 
         verify(accountRepository).existsById(1L);
+    }
+
+    @Test
+    @DisplayName("Dado um accountId valido " +
+                 "Quando chamado o usecase para buscar o account " +
+                 "Entao deve ser o account encontrado")
+    void findByIdCase1() {
+        Account accountBd = new Account(1L);
+        when(accountRepository.findById(any())).thenReturn(Optional.of(accountBd));
+
+        Account account = findAccount.byId(1L);
+
+        assertEquals(accountBd, account);
+
+        verify(accountRepository).findById(1L);
+    }
+
+    @Test
+    @DisplayName("Dado um accountId que nao exista " +
+                 "Quando chamado o usecase para buscar o account " +
+                 "Entao deve ser lancado um NotFoundException")
+    void findByIdCase2() {
+        when(accountRepository.findById(any())).thenReturn(Optional.empty());
+
+       assertThrows(NotFoundException.class, () -> findAccount.byId(1L));
+
+        verify(accountRepository).findById(1L);
     }
 }
