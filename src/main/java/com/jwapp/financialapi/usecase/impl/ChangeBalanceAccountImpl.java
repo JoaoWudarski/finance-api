@@ -22,4 +22,14 @@ public class ChangeBalanceAccountImpl implements ChangeBalanceAccount {
         account.addBalance(value);
         accountRepository.save(account);
     }
+
+    @Override
+    public void removeValue(BigDecimal value, Long accountId) {
+        Account account = findAccount.byId(accountId);
+        if (account.getBalance().subtract(value).compareTo(BigDecimal.ZERO) < 0)
+            throw new IllegalArgumentException("Saldo insuficiente para completar a transacao!");
+
+        account.removeBalance(value);
+        accountRepository.save(account);
+    }
 }
