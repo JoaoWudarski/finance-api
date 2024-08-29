@@ -17,7 +17,6 @@ public class RegisterEntranceImpl implements RegisterEntrance {
     @Override
     public Long withPix(AccountReceipt accountReceipt) {
         changeBalanceAccount.addValue(accountReceipt.getTransactionValue(), accountReceipt.getAccount().getId());
-        accountReceipt = accountReceiptRepository.save(accountReceipt);
-        return accountReceipt.getId();
+        return accountReceiptRepository.save(accountReceipt).getId();
     }
 }

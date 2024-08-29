@@ -41,4 +41,8 @@ public class Account {
     public void addBalance(BigDecimal addValue) {
         this.balance = this.balance.add(addValue);
     }
+
+    public void removeBalance(BigDecimal valueToRemove) {
+        this.balance = this.balance.subtract(valueToRemove);
+    }
 }
