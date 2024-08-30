@@ -71,4 +71,51 @@ class PaymentControllerTest extends FinancialApiApplicationTests {
 
         verify(registerPayment, never()).withPix(any());
     }
+
+    @Test
+    @DisplayName("Dado uma nova transacao de saida de cartao de credito " +
+                 "Quando chamado o endpoint para pagamento com cartao " +
+                 "Entao deve ser chamado o serviço e retornado 201 com o ID gerado")
+    void transactionPaymentCardCase1() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/payments/credit/4")
+                .content(new StringBuilder()
+                        .append("{")
+                        .append("\"installments\": 5,")
+                        .append("\"description\": \"Descricao de teste\",")
+                        .append("\"value\": 3213.43")
+                        .append("}").toString())
+                .contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        assertEquals(200, response.getStatus());
+
+        verify(registerPayment).withCreditCard(any());
+    }
+
+    @ParameterizedTest
+    @DisplayName("Dado uma nova transacao de pagamento com cartao de credito " +
+                 "Quando chamado o endpoint para pagar " +
+                 "Entao deve ser retornado um erro 400 indicando os campos faltantes")
+    @CsvSource(value = {
+            "null, null, null",
+            " , -1.0, -1",
+            "null, 0, 0"
+    }, nullValues = {"null"})
+    void transactionPaymentCardFailedCase2(String description, Float value, Integer installments) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/payments/credit/4")
+                        .content(String.format(Locale.ENGLISH, (new StringBuilder()
+                                .append("{\n")
+                                .append("\"installments\": %%d,")
+                                .append("\"description\": %%s,\n")
+                                .append("\"value\": %%f\n")
+                                .append("}").toString())
+                                .formatted(), installments, description, value))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Validation request error"))
+                .andExpect(jsonPath("$.body.installments").exists())
+                .andExpect(jsonPath("$.body.description").exists())
+                .andExpect(jsonPath("$.body.value").exists());
+
+        verify(registerPayment, never()).withCreditCard(any());
+    }
 }

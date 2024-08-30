@@ -3,6 +3,7 @@ package com.jwapp.financialapi.usecase;
 import com.jwapp.financialapi.domain.Account;
 import com.jwapp.financialapi.domain.payment.AccountPayment;
 import com.jwapp.financialapi.repository.AccountPaymentRepository;
+import com.jwapp.financialapi.repository.CardPaymentRepository;
 import com.jwapp.financialapi.usecase.impl.RegisterPaymentImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,13 +24,17 @@ class RegisterPaymentTest {
     private AccountPaymentRepository accountPaymentRepository;
     @Mock
     private ChangeBalanceAccount changeBalanceAccount;
+    @Mock
+    private CardPaymentRepository cardPaymentRepository;
+    @Mock
+    private ChangeLimitCard changeLimitCard;
 
     private RegisterPayment registerPayment;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        registerPayment = new RegisterPaymentImpl(accountPaymentRepository, changeBalanceAccount);
+        registerPayment = new RegisterPaymentImpl(accountPaymentRepository, cardPaymentRepository, changeBalanceAccount, changeLimitCard);
     }
 
     @Test
