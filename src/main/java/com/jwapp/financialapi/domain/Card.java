@@ -38,4 +38,8 @@ public class Card {
     public Card(Long id) {
         this.id = id;
     }
+
+    public void subtractLimit(BigDecimal value) {
+        this.usedLimit = this.usedLimit.add(value);
+    }
 }
