@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record PaymentRequest(
+public record AccountPaymentRequest(
         @NotBlank String description,
         @NotNull @Min(value = 1) BigDecimal value
 ) {
