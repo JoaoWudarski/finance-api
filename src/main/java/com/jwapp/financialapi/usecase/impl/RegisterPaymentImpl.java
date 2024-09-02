@@ -38,7 +38,7 @@ public class RegisterPaymentImpl implements RegisterPayment {
             cardPayment.setId(null);
             cardPayment.setDateTime(transactionDate.plusMonths(install - 1L));
             cardPayment.setDescription(String.format(installmentDescription, install, cardPayment.getInstallments()));
-            cardPaymentRepository.save(cardPayment.clone());
+            cardPaymentRepository.save(new CardPayment(cardPayment));
         }
     }
 }

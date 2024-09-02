@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CardPayment extends Transaction implements Cloneable {
+public class CardPayment extends Transaction {
 
     @ManyToOne
     @JoinColumn(name = "card_id", referencedColumnName = "id")
@@ -34,12 +34,9 @@ public class CardPayment extends Transaction implements Cloneable {
         return super.transactionValue.divide(new BigDecimal(installments), 2, RoundingMode.HALF_EVEN);
     }
 
-    @Override
-    public CardPayment clone() {
-        try {
-            return (CardPayment) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    public CardPayment(CardPayment cardPayment) {
+        super(cardPayment.getId(), cardPayment.getTransactionValue(), cardPayment.getDateTime(), cardPayment.getDescription());
+        this.card = cardPayment.getCard();
+        this.installments = cardPayment.getInstallments();
     }
 }
