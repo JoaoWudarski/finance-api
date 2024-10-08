@@ -25,6 +25,7 @@ public class RegisterPixTransactionImpl extends RegisterTransactionAbstract<Acco
     @Override
     public AccountTransaction exit(AccountTransaction transaction) {
         super.remove(transaction.getTransactionValue(), transaction.getAccount().getId());
+        transaction.setTransactionValue(super.negateValue(transaction.getTransactionValue()));
         return accountTransactionGatewayPort.save(transaction);
     }
 }
