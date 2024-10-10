@@ -1,0 +1,7 @@
+{
+  "message":"Validation request error",
+  "body": {
+    "bank":"must not be empty",
+    "userId":"must not be null"
+  }
+}
