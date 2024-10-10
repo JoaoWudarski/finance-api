@@ -21,10 +21,10 @@ public class CreateAccountImpl implements CreateEntityPort<Account> {
     public Long createNew(Account account) {
         User user = account.getUser();
         if (!findUserPort.exists(user.getId()))
-            throw new NotFoundException("User com id " + user.getId() + " não existe!");
+            throw new NotFoundException("User com id " + user.getId() + " nao existe!");
 
         if (!accountGatewayPort.findByUserAndBank(account.getUser(), account.getBank()).isEmpty())
-            throw new ConflictException("Já existe uma conta do " + account.getBank() + " para esse usuario!");
+            throw new ConflictException("Ja existe uma conta do " + account.getBank() + " para esse usuario!");
 
         return accountGatewayPort.save(account).getId();
     }

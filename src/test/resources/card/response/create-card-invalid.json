@@ -1,0 +1,10 @@
+{
+  "message": "Validation request error",
+  "body": {
+    "accountId": "must not be null",
+    "flag": "must not be empty",
+    "totalLimit": "must be greater than or equal to 1",
+    "paymentDay": "must be less than or equal to 31",
+    "closeDay": "must be less than or equal to 31"
+  }
+}

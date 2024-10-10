@@ -1,0 +1,6 @@
+{
+  "message": "Validation request error",
+  "body": {
+    "name": "must not be empty"
+  }
+}

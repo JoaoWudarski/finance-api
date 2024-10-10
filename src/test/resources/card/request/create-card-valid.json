@@ -1,0 +1,7 @@
+{
+  "flag": "Visa",
+  "closeDay": 10,
+  "paymentDay": 20,
+  "totalLimit": 1000.30,
+  "accountId": 3
+}
